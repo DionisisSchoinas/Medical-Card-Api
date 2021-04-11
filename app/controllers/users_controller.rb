@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   # return authenticated token upon signup
   def create
     user = User.create!(user_params)
-    auth_token = AuthenticateUser.new(user.email, user.password).call
-    user.patient = Patient.create()
-    response = { message: Message.account_created, auth_token: auth_token }
+    result = AuthenticateUser.new(user.email, user.password).call
+    user.create_patient!()
+    response = { message: Message.account_created, auth_token: result[:auth_token], is_doctor: result[:is_doctor] }
     json_response(response, :created)
   end
 

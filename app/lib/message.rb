@@ -20,6 +20,14 @@ class Message
     'Unauthorized request'
   end
 
+  def self.doctor_account_created
+    'Doctor account created successfully'
+  end
+
+  def self.doctor_account_exists
+    'Doctor account already exists'
+  end
+
   def self.account_created
     'Account created successfully'
   end
