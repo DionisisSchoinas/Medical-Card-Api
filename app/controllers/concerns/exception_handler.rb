@@ -18,6 +18,10 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordNotFound do |e|
       json_response({ message: e.message }, :not_found)
     end
+
+    rescue_from ActionController::ParameterMissing do |e|
+      json_response({ message: e.message }, 422)
+    end
   end
 
   private
