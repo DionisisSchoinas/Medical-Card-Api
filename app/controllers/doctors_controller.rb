@@ -1,9 +1,8 @@
 class DoctorsController < ApplicationController
-  before_action :set_doctor
+  before_action :set_doctor, only: [:show, :update]
 
   # GET /doctors
   def index
-    #doctors = Doctor.all
     doctors = Doctor.all
     json_response(doctors)
   end
