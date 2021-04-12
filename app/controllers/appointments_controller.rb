@@ -14,7 +14,7 @@ class AppointmentsController < ApplicationController
     #----------------
     # => Send push notification to devices
     #----------------
-    json_response(Message.appointment_booked_successfully, :created)
+    json_response({ message: Message.appointment_booked_successfully }, :created)
   end
 
   # GET patients/:patient_id/appointments/:id
@@ -34,7 +34,7 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.permit(:appointment_date, :duration_minutes, :doctor_id)
+    params.permit(:appointment_date_time_start, :appointment_date_time_end, :doctor_id)
   end
 
   def set_patient

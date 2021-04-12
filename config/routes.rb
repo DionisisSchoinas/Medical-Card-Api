@@ -9,4 +9,7 @@ Rails.application.routes.draw do
 
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
+
+  get 'qr/generate', to: 'qr_codes#generate'
+  post 'qr/read', to: 'qr_codes#read'
 end
