@@ -5,12 +5,12 @@ class DoctorAppointmentsController < ApplicationController
   # GET /doctors/:doctor_id/appointments
   def index
     appointments = @doctor.appointments
-    json_response(appointments, :ok, ['doctor', 'patient.user'])
+    json_response(appointments, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
   # GET /doctors/:doctor_id/appointments/:id
   def show
-    json_response(@appointment, :ok, ['doctor', 'patient.user'])
+    json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
   private

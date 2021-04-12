@@ -27,6 +27,7 @@ class DoctorsController < ApplicationController
   def update
     if current_user[:id] == @doctor[:user_id]
       @doctor.update(doctor_params)
+      @doctor.image.update(image_params) unless image_params[:image_base64].nil?
       json_response(@doctor)
     else
       json_response({ message: Message.unauthorized }, :unauthorized)

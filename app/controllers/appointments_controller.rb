@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
   # GET patients/:patient_id/appointments
   def index
     appointments = @patient.appointments
-    json_response(appointments, :ok, ['doctor', 'patient.user'])
+    json_response(appointments, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
   # POST patients/:patient_id/appointments
@@ -14,12 +14,12 @@ class AppointmentsController < ApplicationController
     #----------------
     # => Send push notification to devices
     #----------------
-    json_response(new_appointment, :created, ['doctor', 'patient.user'])
+    json_response(Message.appointment_booked_successfully, :created)
   end
 
   # GET patients/:patient_id/appointments/:id
   def show
-    json_response(@appointment, :ok, ['doctor', 'patient.user'])
+    json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
   # DELETE patients/:patient_id/appointments/:id

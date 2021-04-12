@@ -43,4 +43,8 @@ class Message
   def self.logged_in
     'Logged in successfully'
   end
+
+  def self.appointment_booked_successfully
+    'Appointment booked successfully'
+  end
 end
