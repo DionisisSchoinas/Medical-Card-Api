@@ -13,6 +13,12 @@ class DoctorAppointmentsController < ApplicationController
     json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
+  # GET /doctors/:doctor_id/appointments_simple
+  def simple_list
+    appointments = @doctor.appointments.order('appointment_date_time_start ASC')
+    json_response(appointments, :ok, ['appointment.appointment_date_time_start', 'appointment.appointment_date_time_end'])
+  end
+
   private
 
   def set_doctor

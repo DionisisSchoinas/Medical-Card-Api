@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_one :patient, dependent: :destroy
 
   # Validations
-  validates_presence_of :amka, :email, :password_digest, :fullname, :date_of_birth
+  validates_presence_of :amka, :email, :password_digest, :fullname, :date_of_birth, :password_confirmation
   validates :amka, uniqueness: true
   validates :email, uniqueness: true
 end

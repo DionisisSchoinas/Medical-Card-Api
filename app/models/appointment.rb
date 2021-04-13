@@ -6,11 +6,16 @@ class Appointment < ApplicationRecord
   # Validations
   validates_presence_of :appointment_date_time_start, :appointment_date_time_end, :doctor_id, :patient_id
 
-  validates :appointment_date_time_start,
-    uniqueness: { scope: :doctor_id, message: "already booked for this doctor" },
-    numericality: { only_integer: true, message: "must be represented in seconds since Epoch" }
-  validates :appointment_date_time_start, numericality: { greater_than: 12.hours.from_now.to_i, message: "must be at least 12 hours after the current time" }
+  validates :appointment_date_time_start, uniqueness: { scope: :doctor_id, message: "already booked for this doctor" }
+  validate :start_date_cannot_be_earlier_than_6_hours
 
-  validates :appointment_date_time_end, numericality: { only_integer: true, message: "must be represented in seconds since Epoch" }
-  validates :appointment_date_time_end, numericality: { greater_than: :appointment_date_time_start, message: "must be greater than Appointment date time start"}
+  validate :end_date_cannot_be_earlier_than_start_date
+
+  def start_date_cannot_be_earlier_than_6_hours
+    errors.add(:appointment_date_time_start, "must be at least 6 hours after the current time in UTC") if appointment_date_time_start.to_datetime < (Time.now.utc + 6.hours)
+  end
+
+  def end_date_cannot_be_earlier_than_start_date
+    errors.add(:appointment_date_time_end, "must be later than Appointment date time start") if appointment_date_time_start.to_datetime >= appointment_date_time_end.to_datetime
+  end
 end

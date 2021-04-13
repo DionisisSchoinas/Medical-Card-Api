@@ -1,11 +1,11 @@
 class QrCodesController < ApplicationController
   before_action :set_patient, only: [:generate]
-    before_action :set_doctor, only: [:read]
+  before_action :set_doctor, only: [:read]
 
   # GET qr/generate
   def generate
     token = JsonWebToken.encode({ patient_id: @patient[:id] }, 5.minutes.from_now)
-    json_response({ patient_id: @patient[:id], token: token })
+    json_response({ expires_after_seconds: 5 * 60, token: token })
   end
 
   # POST qr/read

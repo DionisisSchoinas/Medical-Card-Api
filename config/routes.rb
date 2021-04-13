@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :doctors do
     resources :doctor_appointments, as: 'appointments', path: 'appointments', only: [:index, :show]
   end
+  get 'doctors/:doctor_id/appointments_simple', to: 'doctor_appointments#simple_list'
 
   resources :patients do
     resources :appointments

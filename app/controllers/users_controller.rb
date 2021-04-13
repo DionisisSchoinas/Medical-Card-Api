@@ -15,8 +15,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    raise(ActionController::ParameterMissing, 'password_confirmation') if params[:password_confirmation].nil?
-
     params.permit(
       :amka,
       :email,
