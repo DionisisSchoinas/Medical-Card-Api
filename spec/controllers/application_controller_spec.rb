@@ -4,8 +4,8 @@ RSpec.describe ApplicationController, type: :controller do
   # create test user
   let!(:user) { create(:user) }
    # set headers for authorization
-  let(:headers) { { 'Authorization_Token' => token_generator(user.id) } }
-  let(:invalid_headers) { { 'Authorization_Token' => nil } }
+  let(:headers) { { 'AuthorizationToken' => token_generator(user.id) } }
+  let(:invalid_headers) { { 'AuthorizationToken' => nil } }
 
   describe "#authorize_request" do
     context "when auth token is passed" do

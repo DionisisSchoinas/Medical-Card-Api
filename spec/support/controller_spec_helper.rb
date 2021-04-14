@@ -22,7 +22,7 @@ module ControllerSpecHelper
   # return valid headers
   def valid_headers
     {
-      "Authorization_Token" => token_generator(user.id),
+      "AuthorizationToken" => token_generator(user.id),
       "Content-Type" => "application/json"
     }
   end
@@ -30,7 +30,7 @@ module ControllerSpecHelper
   # return invalid headers
   def invalid_headers
     {
-      "Authorization_Token" => nil,
+      "AuthorizationToken" => nil,
       "Content-Type" => "application/json"
     }
   end

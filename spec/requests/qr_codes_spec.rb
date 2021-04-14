@@ -10,7 +10,7 @@ RSpec.describe 'QR Codes API', type: :request do
   describe 'GET /qr/generate' do
     let(:headers) do
       {
-        Authorization_Token: token_generator(patient.user.id),
+        AuthorizationToken: token_generator(patient.user.id),
         "Content-Type" => "application/json"
       }
     end
@@ -30,13 +30,13 @@ RSpec.describe 'QR Codes API', type: :request do
     let(:appointment) { create(:appointment, appointment_date_time_start: 10.days.from_now, doctor_id: doctor.id, patient_id: patient.id) }
     let(:valid_headers) do
       {
-        Authorization_Token: token_generator(doctor.user.id),
+        AuthorizationToken: token_generator(doctor.user.id),
         "Content-Type" => "application/json"
       }
     end
     let(:invalid_headers) do
       {
-        Authorization_Token: token_generator(patient.user.id),
+        AuthorizationToken: token_generator(patient.user.id),
         "Content-Type" => "application/json"
       }
     end
