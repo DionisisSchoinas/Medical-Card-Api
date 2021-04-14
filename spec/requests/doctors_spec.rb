@@ -54,7 +54,7 @@ RSpec.describe 'Doctors API' do
       let(:user2) { create(:user) }
       let(:headers) do
         {
-          Authorization: token_generator(user2.id),
+          Authorization_Token: token_generator(user2.id),
           "Content-Type" => "application/json"
         }
       end
