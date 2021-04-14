@@ -5,7 +5,10 @@ class UsersController < ApplicationController
   # POST /signup
   # return authenticated token upon signup
   def create
-    user = User.create!(user_params)
+    new_params = user_params
+    new_params[:password] = params[:password] unless params[:password].nil?
+    new_params[:password_confirmation] = params[:password_confirmation] unless params[:password_confirmation].nil?
+    user = User.create!(new_params)
     result = AuthenticateUser.new(user.email, user.password).call
     user.create_patient!()
     response = { message: Message.account_created, auth_token: result[:auth_token], is_doctor: result[:is_doctor] }
@@ -18,8 +21,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(
       :amka,
       :email,
-      :password,
-      :password_confirmation,
       :fullname,
       :date_of_birth
     )

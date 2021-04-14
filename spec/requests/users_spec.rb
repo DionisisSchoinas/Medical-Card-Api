@@ -8,11 +8,11 @@ RSpec.describe 'Users API', type: :request do
       user: {
         amka: user.amka,
         email: user.email,
-        password: user.password,
-        password_confirmation: user.password,
         fullname: user.fullname,
         date_of_birth: user.date_of_birth
-      }
+      },
+      password: user.password,
+      password_confirmation: user.password,
     }.to_json
   end
 
