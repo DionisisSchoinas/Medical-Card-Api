@@ -26,15 +26,15 @@ gem 'jwt'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# Reduces boot times through caching; required in config/boot.rb
+#gem 'bootsnap', '>= 1.4.4', require: false
+
 gem 'rswag-api'
 gem 'rswag-ui'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-
-  # Reduces boot times through caching; required in config/boot.rb
-  gem 'bootsnap', '>= 1.4.4', require: false
 
   gem 'rspec-rails', '~> 4.0'
   gem 'rswag-specs'
