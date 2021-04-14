@@ -57,7 +57,7 @@ RSpec.describe 'Appointments API', type: :request do
   #Path   : /patients/:patient_id/appointments
   #Title  : Creates an appointment
   path '/patients/{patient_id}/appointments' do
-    post 'Creates a doctor' do
+    post 'Creates an apoointment' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string

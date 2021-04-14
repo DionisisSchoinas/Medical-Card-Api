@@ -30,7 +30,7 @@ RSpec.describe 'Doctor Appointments API', type: :request do
   #Path   : /doctors/:doctor_id/appointments/:id
   #Title  : Gets doctor's appointment
   path '/doctors/{doctor_id}/appointments/{id}' do
-    get 'Gets doctor\'s appointments' do
+    get 'Gets doctor\'s appointment' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string

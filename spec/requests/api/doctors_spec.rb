@@ -24,7 +24,7 @@ RSpec.describe 'Doctors API', type: :request do
   #Path   : /doctors/:id
   #Title  : Gets a doctor
   path '/doctors/{id}' do
-    get 'Gets all doctors' do
+    get 'Gets a doctor' do
       tags 'Doctor'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string

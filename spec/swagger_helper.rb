@@ -24,6 +24,14 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
+          url: 'http://{remoteHost}',
+          variables: {
+            remoteHost: {
+              default: 'medical-card-api.herokuapp.com'
+            }
+          }
+        },
+        {
           url: 'http://{localHost}',
           variables: {
             localHost: {

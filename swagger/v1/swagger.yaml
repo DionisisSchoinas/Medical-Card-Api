@@ -27,7 +27,7 @@ paths:
         '422':
           description: invalid request
     post:
-      summary: Creates a doctor
+      summary: Creates an apoointment
       tags:
       - Appointment
       parameters:
@@ -118,7 +118,7 @@ paths:
           description: invalid request
   "/auth/login":
     post:
-      summary: Creates a doctor
+      summary: Logs in a user
       tags:
       - Authentication
       parameters: []
@@ -164,7 +164,7 @@ paths:
           description: invalid request
   "/doctors/{doctor_id}/appointments/{id}":
     get:
-      summary: Gets doctor's appointments
+      summary: Gets doctor's appointment
       tags:
       - Appointment
       parameters:
@@ -268,7 +268,7 @@ paths:
               - image_base64
   "/doctors/{id}":
     get:
-      summary: Gets all doctors
+      summary: Gets a doctor
       tags:
       - Doctor
       parameters:
@@ -356,7 +356,7 @@ paths:
           type: string
       responses:
         '200':
-          description: returns a token
+          description: returns appointment information
         '401':
           description: unauthorized request (current user isn't a doctor)
         '422':
@@ -409,6 +409,10 @@ paths:
               - fullname
               - date_of_birth
 servers:
+- url: http://{remoteHost}
+  variables:
+    remoteHost:
+      default: medical-card-api.herokuapp.com
 - url: http://{localHost}
   variables:
     localHost:

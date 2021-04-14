@@ -37,8 +37,7 @@ RSpec.describe 'QR Codes API', type: :request do
         required: [ 'token' ]
       }
 
-      response '200', 'returns a token' do
-        #let(:user) { create(:user, :email, :password) }
+      response '200', 'returns appointment information' do
         run_test!
       end
 
