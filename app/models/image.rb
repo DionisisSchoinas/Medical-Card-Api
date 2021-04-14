@@ -4,4 +4,6 @@ class Image < ApplicationRecord
 
   # Validations
   validates_presence_of :image_base64
+
+  validates :doctor_id, uniqueness: true
 end

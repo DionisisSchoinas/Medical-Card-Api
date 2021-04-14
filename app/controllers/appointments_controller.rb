@@ -10,9 +10,7 @@ class AppointmentsController < ApplicationController
 
   # POST patients/:patient_id/appointments
   def create
-    app_params = appointment_params;
-    app_params[:appointment_date_time_end] = appointment_params[:appointment_date_time_start].to_datetime + 1.hour
-    new_appointment = @patient.appointments.create!(app_params)
+    new_appointment = @patient.appointments.create!(appointment_params)
     #----------------
     # => Send push notification to devices
     #----------------
@@ -36,7 +34,7 @@ class AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.permit(:appointment_date_time_start, :doctor_id)
+    params.require(:appointment).permit(:appointment_date_time_start, :appointment_date_time_end, :doctor_id)
   end
 
   def set_patient

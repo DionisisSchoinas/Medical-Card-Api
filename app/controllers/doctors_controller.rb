@@ -9,12 +9,12 @@ class DoctorsController < ApplicationController
 
   # POST /doctors
   def create
-    if current_user.doctor.nil?
-      current_user.create_doctor!(doctor_params)
-      current_user.doctor.create_image!(image_params) unless image_params[:image_base64].nil?
-      json_response({ doctor: current_user.doctor, message: Message.doctor_account_created }, :created)
+    if image_params[:image_base64].nil?
+      raise(ActionController::ParameterMissing, 'image_base64')
     else
-      json_response({ message: Message.doctor_account_exists }, :unprocessable_entity)
+      current_user.create_doctor!(doctor_params)
+      current_user.doctor.create_image!(image_params)
+      json_response({ doctor: current_user.doctor, message: Message.doctor_account_created }, :created)
     end
   end
 
@@ -37,7 +37,7 @@ class DoctorsController < ApplicationController
   private
 
   def doctor_params
-    params.permit(
+    params.require(:doctor).permit(
       :speciality,
       :office_address,
       :phone,

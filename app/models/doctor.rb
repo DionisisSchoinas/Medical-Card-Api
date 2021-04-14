@@ -8,4 +8,6 @@ class Doctor < ApplicationRecord
 
   # Validations
   validates_presence_of :speciality, :office_address, :phone, :email, :cost
+
+  validates :user_id, uniqueness: true
 end
