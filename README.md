@@ -6,4 +6,7 @@
 
 * Documentation
   * Run the server locally and use **:3000/api-docs** or
-  * Go to **/api-docs** on live server
+  * Go to **https://medical-card-api.herokuapp.com/api-docs** on live server
+
+* Live API version
+  * At **https://medical-card-api.herokuapp.com/**
