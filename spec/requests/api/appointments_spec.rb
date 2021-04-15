@@ -2,15 +2,13 @@ require 'swagger_helper'
 
 RSpec.describe 'Appointments API', type: :request do
   #Method : GET
-  #Path   : /patients/:patient_id/appointments
+  #Path   : /appointments
   #Title  : Gets patient's appointments
-  path '/patients/{patient_id}/appointments' do
+  path '/appointments' do
     get 'Gets patient\'s appointments' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
-      parameter name: :patient_id, in: :path, type: :string
-      let(:patient_id) { 1 }
 
       response '200', 'returns all patient\'s appointments' do
         run_test!
@@ -27,15 +25,13 @@ RSpec.describe 'Appointments API', type: :request do
   end
 
   #Method : GET
-  #Path   : /patients/:patient_id/appointments/:id
+  #Path   : /appointments/:id
   #Title  : Gets patient's appointment
-  path '/patients/{patient_id}/appointments/{id}' do
+  path '/appointments/{id}' do
     get 'Gets patient\'s appointment' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
-      parameter name: :patient_id, in: :path, type: :string
-      let(:patient_id) { 1 }
       parameter name: :id, in: :path, type: :string
       let(:id) { 1 }
 
@@ -54,15 +50,13 @@ RSpec.describe 'Appointments API', type: :request do
   end
 
   #Method : POST
-  #Path   : /patients/:patient_id/appointments
+  #Path   : /appointments
   #Title  : Creates an appointment
-  path '/patients/{patient_id}/appointments' do
+  path '/appointments' do
     post 'Creates an apoointment' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
-      parameter name: :patient_id, in: :path, type: :string
-      let(:patient_id) { 1 }
 
       parameter in: :body, schema: {
         type: :object,
@@ -85,15 +79,13 @@ RSpec.describe 'Appointments API', type: :request do
   end
 
   #Method : DELETE
-  #Path   : /patients/:patient_id/appointments/:id
+  #Path   : /appointments/:id
   #Title  : Deletes patient's appointment
-  path '/patients/{patient_id}/appointments/{id}' do
+  path '/appointments/{id}' do
     delete 'Deletes patient\'s appointment' do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
-      parameter name: :patient_id, in: :path, type: :string
-      let(:patient_id) { 1 }
       parameter name: :id, in: :path, type: :string
       let(:id) { 1 }
 

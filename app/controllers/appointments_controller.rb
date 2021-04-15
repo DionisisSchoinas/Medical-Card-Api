@@ -2,13 +2,13 @@ class AppointmentsController < ApplicationController
   before_action :set_patient
   before_action :set_appointment, only: [:show, :destroy]
 
-  # GET patients/:patient_id/appointments
+  # GET /appointments
   def index
     appointments = @patient.appointments
     json_response(appointments, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
-  # POST patients/:patient_id/appointments
+  # POST /appointments
   def create
     new_appointment = @patient.appointments.create!(appointment_params)
     #----------------
@@ -17,12 +17,12 @@ class AppointmentsController < ApplicationController
     json_response({ message: Message.appointment_booked_successfully }, :created)
   end
 
-  # GET patients/:patient_id/appointments/:id
+  # GET /appointments/:id
   def show
     json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
   end
 
-  # DELETE patients/:patient_id/appointments/:id
+  # DELETE /appointments/:id
   def destroy
     @appointment.destroy
     #----------------
@@ -38,7 +38,7 @@ class AppointmentsController < ApplicationController
   end
 
   def set_patient
-    @patient = Patient.find(params[:patient_id])
+    @patient = current_user.patient
   end
 
   def set_appointment

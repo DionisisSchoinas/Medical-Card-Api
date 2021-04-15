@@ -77,4 +77,79 @@ RSpec.describe 'Doctor Appointments API', type: :request do
       end
     end
   end
+
+  #Method : GET
+  #Path   : /doctors/appointments
+  #Title  : Gets doctor's appointments
+  path '/doctors/appointments' do
+    get 'Gets logged in doctor\'s appointments' do
+      tags 'Appointment'
+      consumes 'application/json'
+      parameter name: :AuthorizationToken, in: :header, type: :string
+
+      response '200', 'returns all doctor\'s appointments' do
+        run_test!
+      end
+
+      response '401', 'unauthorized request' do
+        run_test!
+      end
+
+      response '422', 'invalid request' do
+        run_test!
+      end
+    end
+  end
+
+  #Method : GET
+  #Path   : /doctors/appointments/:id
+  #Title  : Gets doctor's appointment
+  path '/doctors/appointments/{id}' do
+    get 'Gets logged in doctor\'s appointment' do
+      tags 'Appointment'
+      consumes 'application/json'
+      parameter name: :AuthorizationToken, in: :header, type: :string
+      parameter name: :id, in: :path, type: :string
+      let(:id) { 1 }
+
+      response '200', 'returns doctor\'s appointment' do
+        run_test!
+      end
+
+      response '401', 'unauthorized request' do
+        run_test!
+      end
+
+      response '404', 'appointment not found' do
+        run_test!
+      end
+
+      response '422', 'invalid request' do
+        run_test!
+      end
+    end
+  end
+
+  #Method : GET
+  #Path   : /doctors/appointments_simple
+  #Title  : Gets doctor's appointments with less data
+  path '/doctors/appointments_simple' do
+    get 'Gets logged in doctor\'s appointments (only dates)' do
+      tags 'Appointment'
+      consumes 'application/json'
+      parameter name: :AuthorizationToken, in: :header, type: :string
+
+      response '200', 'returns all doctor\'s appointments (only dates)' do
+        run_test!
+      end
+
+      response '401', 'unauthorized request' do
+          run_test!
+      end
+
+      response '422', 'invalid request' do
+        run_test!
+      end
+    end
+  end
 end

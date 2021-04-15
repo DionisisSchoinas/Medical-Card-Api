@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/patients/{patient_id}/appointments":
+  "/appointments":
     get:
       summary: Gets patient's appointments
       tags:
@@ -12,11 +12,6 @@ paths:
       parameters:
       - name: AuthorizationToken
         in: header
-        schema:
-          type: string
-      - name: patient_id
-        in: path
-        required: true
         schema:
           type: string
       responses:
@@ -33,11 +28,6 @@ paths:
       parameters:
       - name: AuthorizationToken
         in: header
-        schema:
-          type: string
-      - name: patient_id
-        in: path
-        required: true
         schema:
           type: string
       responses:
@@ -63,7 +53,7 @@ paths:
               - appointment_date_time_start
               - appointment_date_time_end
               - doctor_id
-  "/patients/{patient_id}/appointments/{id}":
+  "/appointments/{id}":
     get:
       summary: Gets patient's appointment
       tags:
@@ -71,11 +61,6 @@ paths:
       parameters:
       - name: AuthorizationToken
         in: header
-        schema:
-          type: string
-      - name: patient_id
-        in: path
-        required: true
         schema:
           type: string
       - name: id
@@ -97,11 +82,6 @@ paths:
       parameters:
       - name: AuthorizationToken
         in: header
-        schema:
-          type: string
-      - name: patient_id
-        in: path
-        required: true
         schema:
           type: string
       - name: id
@@ -209,6 +189,64 @@ paths:
           description: returns all doctor's appointments (only dates)
         '404':
           description: doctor not found
+        '422':
+          description: invalid request
+  "/doctors/appointments":
+    get:
+      summary: Gets logged in doctor's appointments
+      tags:
+      - Appointment
+      parameters:
+      - name: AuthorizationToken
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: returns all doctor's appointments
+        '401':
+          description: unauthorized request
+        '422':
+          description: invalid request
+  "/doctors/appointments/{id}":
+    get:
+      summary: Gets logged in doctor's appointment
+      tags:
+      - Appointment
+      parameters:
+      - name: AuthorizationToken
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: returns doctor's appointment
+        '401':
+          description: unauthorized request
+        '404':
+          description: appointment not found
+        '422':
+          description: invalid request
+  "/doctors/appointments_simple":
+    get:
+      summary: Gets logged in doctor's appointments (only dates)
+      tags:
+      - Appointment
+      parameters:
+      - name: AuthorizationToken
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: returns all doctor's appointments (only dates)
+        '401':
+          description: unauthorized request
         '422':
           description: invalid request
   "/doctors":

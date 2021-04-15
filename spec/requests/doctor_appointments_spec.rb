@@ -93,4 +93,57 @@ RSpec.describe 'Doctor Appointments API' do
       end
     end
   end
+
+  # Test suite for GET /doctor/appointments
+  describe 'GET /doctor/appointments' do
+    before { get "/doctor/appointments", params: {}, headers: headers }
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'returns all doctor\'s appointments' do
+      expect(json.size).to eq(20)
+    end
+  end
+
+  # Test suite for GET /doctor/appointments/:id
+  describe 'GET /doctor/appointments/:id' do
+    before { get "/doctor/appointments/#{id}", params: {}, headers: headers }
+
+    context 'when doctor appointment exists' do
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns the appointment' do
+        expect(json['id']).to eq(id)
+      end
+    end
+
+    context 'when doctor appointment does not exist' do
+      let(:id) { 0 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Appointment/)
+      end
+    end
+  end
+
+  # Test suite for GET /doctor/appointments_simple
+  describe 'GET /doctor/appointments_simple' do
+    before { get "/doctor/appointments_simple", params: {}, headers: headers }
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'returns all doctor\'s appointments only with dates and id' do
+      expect(json.size).to eq(20)
+    end
+  end
 end
