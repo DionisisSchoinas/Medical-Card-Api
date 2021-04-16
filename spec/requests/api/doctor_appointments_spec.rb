@@ -16,6 +16,10 @@ RSpec.describe 'Doctor Appointments API', type: :request do
         run_test!
       end
 
+      response '401', 'authorization failed' do
+        run_test!
+      end
+
       response '404', 'doctor not found' do
         run_test!
       end
@@ -40,6 +44,10 @@ RSpec.describe 'Doctor Appointments API', type: :request do
       let(:id) { 1 }
 
       response '200', 'returns doctor\'s appointment' do
+        run_test!
+      end
+
+      response '401', 'authorization failed' do
         run_test!
       end
 
@@ -68,6 +76,10 @@ RSpec.describe 'Doctor Appointments API', type: :request do
         run_test!
       end
 
+      response '401', 'authorization failed' do
+        run_test!
+      end
+
       response '404', 'doctor not found' do
         run_test!
       end
@@ -91,7 +103,7 @@ RSpec.describe 'Doctor Appointments API', type: :request do
         run_test!
       end
 
-      response '401', 'unauthorized request' do
+      response '401', 'authorization failed' do
         run_test!
       end
 
@@ -116,7 +128,7 @@ RSpec.describe 'Doctor Appointments API', type: :request do
         run_test!
       end
 
-      response '401', 'unauthorized request' do
+      response '401', 'authorization failed' do
         run_test!
       end
 
@@ -143,8 +155,8 @@ RSpec.describe 'Doctor Appointments API', type: :request do
         run_test!
       end
 
-      response '401', 'unauthorized request' do
-          run_test!
+      response '401', 'authorization failed' do
+        run_test!
       end
 
       response '422', 'invalid request' do

@@ -15,6 +15,10 @@ RSpec.describe 'QR Codes API', type: :request do
         run_test!
       end
 
+      response '401', 'authorization failed' do
+        run_test!
+      end
+
       response '422', 'invalid request' do
         run_test!
       end
@@ -41,7 +45,7 @@ RSpec.describe 'QR Codes API', type: :request do
         run_test!
       end
 
-      response '401', 'unauthorized request (current user isn\'t a doctor)' do
+      response '401', 'unauthorized request (current user isn\'t a doctor) or authorization failed' do
         run_test!
       end
 

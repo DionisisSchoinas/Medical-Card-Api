@@ -5,7 +5,7 @@ class AuthenticationController < ApplicationController
   # return auth token and whether or not user is a doctor once user is authenticated
   def authenticate
     authenticated_user = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
-    response = { message: Message.logged_in, auth_token: authenticated_user[:auth_token], is_doctor: authenticated_user[:is_doctor] }
+    response = { message: Message.logged_in, auth_token: authenticated_user[:auth_token], is_doctor: authenticated_user[:is_doctor], fullname: authenticated_user[:fullname], date_of_birth: authenticated_user[:date_of_birth] }
     json_response(response)
   end
 

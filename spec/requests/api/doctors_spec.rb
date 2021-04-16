@@ -14,6 +14,10 @@ RSpec.describe 'Doctors API', type: :request do
         run_test!
       end
 
+      response '401', 'authorization failed' do
+        run_test!
+      end
+
       response '422', 'invalid request' do
         run_test!
       end
@@ -32,6 +36,10 @@ RSpec.describe 'Doctors API', type: :request do
       let(:id) { 1 }
 
       response '200', 'returns a doctor' do
+        run_test!
+      end
+
+      response '401', 'authorization failed' do
         run_test!
       end
 
@@ -71,6 +79,10 @@ RSpec.describe 'Doctors API', type: :request do
         run_test!
       end
 
+      response '401', 'authorization failed' do
+        run_test!
+      end
+
       response '422', 'invalid request' do
         run_test!
       end
@@ -103,7 +115,7 @@ RSpec.describe 'Doctors API', type: :request do
         run_test!
       end
 
-      response '401', 'current user not the given doctor' do
+      response '401', 'current user not the given doctor or authorization failed' do
         run_test!
       end
 

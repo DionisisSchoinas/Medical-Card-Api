@@ -14,7 +14,7 @@ class DoctorsController < ApplicationController
     else
       current_user.create_doctor!(doctor_params)
       current_user.doctor.create_image!(image_params)
-      json_response({ doctor: current_user.doctor, message: Message.doctor_account_created }, :created)
+      json_response({ message: Message.doctor_account_created }, :created)
     end
   end
 

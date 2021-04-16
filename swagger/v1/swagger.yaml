@@ -17,6 +17,8 @@ paths:
       responses:
         '200':
           description: returns all patient's appointments
+        '401':
+          description: authorization failed
         '404':
           description: patient not found
         '422':
@@ -33,6 +35,8 @@ paths:
       responses:
         '201':
           description: appointment created
+        '401':
+          description: authorization failed
         '422':
           description: invalid request
       requestBody:
@@ -71,6 +75,8 @@ paths:
       responses:
         '200':
           description: returns patient's appointment
+        '401':
+          description: authorization failed
         '404':
           description: patient or appointment not found
         '422':
@@ -92,6 +98,8 @@ paths:
       responses:
         '204':
           description: returns no content
+        '401':
+          description: authorization failed
         '404':
           description: patient or appointment not found
         '422':
@@ -138,6 +146,8 @@ paths:
       responses:
         '200':
           description: returns all doctor's appointments
+        '401':
+          description: authorization failed
         '404':
           description: doctor not found
         '422':
@@ -165,6 +175,8 @@ paths:
       responses:
         '200':
           description: returns doctor's appointment
+        '401':
+          description: authorization failed
         '404':
           description: doctor or appointment not found
         '422':
@@ -187,6 +199,8 @@ paths:
       responses:
         '200':
           description: returns all doctor's appointments (only dates)
+        '401':
+          description: authorization failed
         '404':
           description: doctor not found
         '422':
@@ -205,7 +219,7 @@ paths:
         '200':
           description: returns all doctor's appointments
         '401':
-          description: unauthorized request
+          description: authorization failed
         '422':
           description: invalid request
   "/doctors/appointments/{id}":
@@ -227,7 +241,7 @@ paths:
         '200':
           description: returns doctor's appointment
         '401':
-          description: unauthorized request
+          description: authorization failed
         '404':
           description: appointment not found
         '422':
@@ -246,7 +260,7 @@ paths:
         '200':
           description: returns all doctor's appointments (only dates)
         '401':
-          description: unauthorized request
+          description: authorization failed
         '422':
           description: invalid request
   "/doctors":
@@ -262,6 +276,8 @@ paths:
       responses:
         '200':
           description: returns all doctors
+        '401':
+          description: authorization failed
         '422':
           description: invalid request
     post:
@@ -276,6 +292,8 @@ paths:
       responses:
         '201':
           description: doctor created
+        '401':
+          description: authorization failed
         '422':
           description: invalid request
       requestBody:
@@ -322,6 +340,8 @@ paths:
       responses:
         '200':
           description: returns a doctor
+        '401':
+          description: authorization failed
         '404':
           description: doctor not found
         '422':
@@ -344,7 +364,7 @@ paths:
         '200':
           description: returns updated doctor
         '401':
-          description: current user not the given doctor
+          description: current user not the given doctor or authorization failed
         '404':
           description: doctor not found
         '422':
@@ -380,6 +400,8 @@ paths:
       responses:
         '200':
           description: returns a token
+        '401':
+          description: authorization failed
         '422':
           description: invalid request
   "/qr/read":
@@ -396,7 +418,8 @@ paths:
         '200':
           description: returns appointment information
         '401':
-          description: unauthorized request (current user isn't a doctor)
+          description: unauthorized request (current user isn't a doctor) or authorization
+            failed
         '422':
           description: invalid request
       requestBody:
