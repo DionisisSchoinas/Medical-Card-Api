@@ -4,7 +4,7 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    appointments = @patient.appointments.page(page_params[:page]).per_page(page_params[:per_page])
+    appointments = @patient.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day}).order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page])
     json_response(appointments, include: ['doctor.user'], meta: pagination_dict(appointments))
   end
 

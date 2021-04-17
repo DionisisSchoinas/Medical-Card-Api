@@ -4,7 +4,7 @@ class DoctorAppointmentsController < ApplicationController
 
   # GET /doctor/appointments
   def index
-    appointments = @doctor.appointments.page(page_params[:page]).per_page(page_params[:per_page])
+    appointments = @doctor.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day}).order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page])
     json_response(appointments, include: ['patient.user'], meta: pagination_dict(appointments), each_serializer: AppointmentForDoctorSerializer)
   end
 
@@ -15,7 +15,7 @@ class DoctorAppointmentsController < ApplicationController
 
   # GET /doctors/:doctor_id/appointments_simple or /doctor/appointments_simple
   def simple_list
-    appointments = @doctor.appointments.page(page_params[:page]).per_page(page_params[:per_page]).order('appointment_date_time_start ASC')
+    appointments = @doctor.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day}).order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page]).order('appointment_date_time_start ASC')
     json_response(appointments, include: ['appointment.appointment_date_time_start', 'appointment.appointment_date_time_end'], meta: pagination_dict(appointments))
   end
 
