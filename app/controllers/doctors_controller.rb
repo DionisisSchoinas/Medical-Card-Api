@@ -4,7 +4,7 @@ class DoctorsController < ApplicationController
   # GET /doctors
   def index
     doctors = Doctor.all
-    json_response(doctors)
+    json_response(doctors, :ok, ['doctor', 'user'], ['id', 'cost', 'speciality'])
   end
 
   # POST /doctors
