@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     result = AuthenticateUser.new(user.email, user.password).call
     user.create_patient!()
     response = { message: Message.account_created, auth_token: result[:auth_token], is_doctor: result[:is_doctor] }
-    json_response(response, :created)
+    json_response(response, status: :created)
   end
 
   private

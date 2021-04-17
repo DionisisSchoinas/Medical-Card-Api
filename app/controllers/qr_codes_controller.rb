@@ -11,11 +11,11 @@ class QrCodesController < ApplicationController
   # POST qr/read
   def read
     if current_user.doctor.nil?
-      json_response({ message: Message.unauthorized }, :unauthorized)
+      json_response({ message: Message.unauthorized }, status: :unauthorized)
     else
       data = JsonWebToken.decode(token)
       appointment = Appointment.where('doctor_id = :doctor_id AND patient_id = :patient_id AND (appointment_date_time_start >= :time_now OR appointment_date_time_end <= :time_now)', {doctor_id: @doctor[:id], patient_id: data[:patient_id], time_now: Time.now}).order('appointment_date_time_start asc').limit(1)
-      json_response(appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
+      json_response(appointment, include: ['doctor.user', 'doctor.image', 'patient.user'])
     end
   end
 

@@ -6,7 +6,7 @@ RSpec.describe 'Appointments API' do
   let!(:user) { create(:user)}
   let!(:doctor) { create(:doctor, user_id: user1.id) }
   let!(:patient) { create(:patient, user_id: user.id) }
-  let!(:appointments) { create_list(:appointment, 20, doctor_id: doctor.id, patient_id: patient.id) }
+  let!(:appointments) { create_list(:appointment, 30, doctor_id: doctor.id, patient_id: patient.id) }
   let(:doctor_id) { doctor.id }
   let(:patient_id) { patient.id }
   let(:id) { appointments.first.id }
@@ -15,14 +15,28 @@ RSpec.describe 'Appointments API' do
 
   # Test suite for GET /appointments
   describe 'GET /appointments' do
-    before { get "/appointments", params: {}, headers: headers }
+    context 'with default page and per_page values' do
+      before { get "/appointments", params: {}, headers: headers }
 
-    it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns 1st page of patient\'s appointments (20 appointments)' do
+        expect(json['appointments'].size).to eq(20)
+      end
     end
 
-    it 'returns all patient\'s appointments' do
-      expect(json.size).to eq(20)
+    context 'with page=2 and per_page=20' do
+      before { get "/appointments?page=2&per_page=20", params: {}, headers: headers }
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns 2nd page of patient\'s appointments (10 appointments)' do
+        expect(json['appointments'].size).to eq(10)
+      end
     end
   end
 
@@ -36,7 +50,7 @@ RSpec.describe 'Appointments API' do
       end
 
       it 'returns the appointment' do
-        expect(json['id']).to eq(id)
+        expect(json['appointment']['id']).to eq(id)
       end
     end
 

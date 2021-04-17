@@ -2,21 +2,21 @@ class DoctorAppointmentsController < ApplicationController
   before_action :set_doctor
   before_action :set_appointment, only: [:show]
 
-  # GET /doctors/:doctor_id/appointments or /doctors/appointments
+  # GET /doctors/:doctor_id/appointments or /doctor/appointments
   def index
-    appointments = @doctor.appointments
-    json_response(appointments, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
+    appointments = @doctor.appointments.page(page_params[:page]).per_page(page_params[:per_page])
+    json_response(appointments, include: ['patient.user'], meta: pagination_dict(appointments), each_serializer: AppointmentForDoctorSerializer)
   end
 
-  # GET /doctors/:doctor_id/appointments/:id or /doctors/appointments/:id
+  # GET /doctors/:doctor_id/appointments/:id or /doctor/appointments/:id
   def show
-    json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
+    json_response(@appointment, include: ['patient.user'], serializer: AppointmentForDoctorSerializer)
   end
 
-  # GET /doctors/:doctor_id/appointments_simple or /doctors/appointments_simple
+  # GET /doctors/:doctor_id/appointments_simple or /doctor/appointments_simple
   def simple_list
-    appointments = @doctor.appointments.order('appointment_date_time_start ASC')
-    json_response(appointments, :ok, ['appointment.appointment_date_time_start', 'appointment.appointment_date_time_end'])
+    appointments = @doctor.appointments.page(page_params[:page]).per_page(page_params[:per_page]).order('appointment_date_time_start ASC')
+    json_response(appointments, include: ['appointment.appointment_date_time_start', 'appointment.appointment_date_time_end'], meta: pagination_dict(appointments))
   end
 
   private

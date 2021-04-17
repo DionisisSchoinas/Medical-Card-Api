@@ -4,8 +4,8 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments
   def index
-    appointments = @patient.appointments
-    json_response(appointments, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
+    appointments = @patient.appointments.page(page_params[:page]).per_page(page_params[:per_page])
+    json_response(appointments, include: ['doctor.user'], meta: pagination_dict(appointments))
   end
 
   # POST /appointments
@@ -14,12 +14,12 @@ class AppointmentsController < ApplicationController
     #----------------
     # => Send push notification to devices
     #----------------
-    json_response({ message: Message.appointment_booked_successfully }, :created)
+    json_response({ message: Message.appointment_booked_successfully }, status: :created)
   end
 
   # GET /appointments/:id
   def show
-    json_response(@appointment, :ok, ['doctor.user', 'doctor.image', 'patient.user'])
+    json_response(@appointment, include: ['doctor.user', 'doctor.image'], serializer: SingleAppointmentSerializer)
   end
 
   # DELETE /appointments/:id

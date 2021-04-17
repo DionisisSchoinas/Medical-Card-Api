@@ -9,6 +9,8 @@ RSpec.describe 'Appointments API', type: :request do
       tags 'Appointment'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
+      parameter name: :page, in: :query, type: :string
+      parameter name: :per_page, in: :query, type: :string
 
       response '200', 'returns all patient\'s appointments' do
         run_test!
@@ -37,7 +39,6 @@ RSpec.describe 'Appointments API', type: :request do
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :id, in: :path, type: :string
-      let(:id) { 1 }
 
       response '200', 'returns patient\'s appointment' do
         run_test!
@@ -99,7 +100,6 @@ RSpec.describe 'Appointments API', type: :request do
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :id, in: :path, type: :string
-      let(:id) { 1 }
 
       response '204', 'returns no content' do
         run_test!
@@ -108,7 +108,7 @@ RSpec.describe 'Appointments API', type: :request do
       response '401', 'authorization failed' do
         run_test!
       end
-      
+
       response '404', 'patient or appointment not found' do
         run_test!
       end

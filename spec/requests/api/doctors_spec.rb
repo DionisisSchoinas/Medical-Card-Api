@@ -9,6 +9,8 @@ RSpec.describe 'Doctors API', type: :request do
       tags 'Doctor'
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
+      parameter name: :page, in: :query, type: :string
+      parameter name: :per_page, in: :query, type: :string
 
       response '200', 'returns all doctors' do
         run_test!
@@ -33,7 +35,6 @@ RSpec.describe 'Doctors API', type: :request do
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :id, in: :path, type: :string
-      let(:id) { 1 }
 
       response '200', 'returns a doctor' do
         run_test!
@@ -98,7 +99,6 @@ RSpec.describe 'Doctors API', type: :request do
       consumes 'application/json'
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :id, in: :path, type: :string
-      let(:id) { 1 }
       parameter in: :body, schema: {
         type: :object,
         properties: {

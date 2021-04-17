@@ -3,21 +3,39 @@ require 'rails_helper'
 RSpec.describe 'Doctors API' do
   # Initialize the test data
   let!(:user) { create(:user)}
+  let!(:user2) { create(:user)}
+  let!(:user3) { create(:user)}
   let!(:doctor) { create(:doctor, user_id: user.id) }
+  let!(:doctor2) { create(:doctor, user_id: user2.id) }
+  let!(:doctor3) { create(:doctor, user_id: user3.id) }
   let(:id) { doctor.id }
   # authorize request
   let(:headers) { valid_headers }
 
   # Test suite for GET /doctors
   describe 'GET /doctors' do
-    before { get "/doctors", params: {}, headers: headers }
+    context 'with default page and per_page values' do
+      before { get "/doctors", params: {}, headers: headers }
 
-    it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns 1st page of doctors (3 doctors)' do
+        expect(json['doctors'].size).to eq(3)
+      end
     end
 
-    it 'returns all doctors' do
-      expect(json.size).to eq(1)
+    context 'with page=2 and per_page=2' do
+      before { get "/doctors?page=2&per_page=2", params: {}, headers: headers }
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns 2nd page of doctors (1 doctor)' do
+        expect(json['doctors'].size).to eq(1)
+      end
     end
   end
 
@@ -31,7 +49,7 @@ RSpec.describe 'Doctors API' do
       end
 
       it 'returns the doctor' do
-        expect(json['id']).to eq(id)
+        expect(json['doctor']['id']).to eq(id)
       end
     end
 
@@ -51,10 +69,10 @@ RSpec.describe 'Doctors API' do
   # Test suite for POST /doctors
   describe 'POST /doctors' do
     context 'when request attributes are valid' do
-      let(:user2) { create(:user) }
+      let(:user4) { create(:user) }
       let(:headers) do
         {
-          AuthorizationToken: token_generator(user2.id),
+          AuthorizationToken: token_generator(user4.id),
           "Content-Type" => "application/json"
         }
       end
@@ -129,7 +147,7 @@ RSpec.describe 'Doctors API' do
       before { put "/doctors/#{id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
-        expect(json['id']).to eq(id)
+        expect(json['doctor']['id']).to eq(id)
       end
 
       it 'returns status code 200' do
