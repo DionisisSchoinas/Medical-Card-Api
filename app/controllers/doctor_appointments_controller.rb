@@ -2,13 +2,13 @@ class DoctorAppointmentsController < ApplicationController
   before_action :set_doctor
   before_action :set_appointment, only: [:show]
 
-  # GET /doctors/:doctor_id/appointments or /doctor/appointments
+  # GET /doctor/appointments
   def index
     appointments = @doctor.appointments.page(page_params[:page]).per_page(page_params[:per_page])
     json_response(appointments, include: ['patient.user'], meta: pagination_dict(appointments), each_serializer: AppointmentForDoctorSerializer)
   end
 
-  # GET /doctors/:doctor_id/appointments/:id or /doctor/appointments/:id
+  # GET /doctor/appointments/:id
   def show
     json_response(@appointment, include: ['patient.user'], serializer: AppointmentForDoctorSerializer)
   end

@@ -2,9 +2,7 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
-  resources :doctors, only: [:index, :create, :show, :update] do
-    resources :doctor_appointments, as: 'appointments', path: 'appointments', only: [:index, :show]
-  end
+  resources :doctors, only: [:index, :create, :show, :update]
   get 'doctors/:doctor_id/appointments_simple', to: 'doctor_appointments#simple_list'
   get 'doctor/appointments', to: 'doctor_appointments#index'
   get 'doctor/appointments/:id', to: 'doctor_appointments#show'
