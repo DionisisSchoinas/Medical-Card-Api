@@ -11,6 +11,7 @@ RSpec.describe 'Doctors API', type: :request do
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :page, in: :query, type: :string
       parameter name: :per_page, in: :query, type: :string
+      parameter name: :speciality_query, in: :query, type: :string
 
       response '200', 'returns all doctors' do
         run_test!

@@ -3,8 +3,10 @@ class DoctorsController < ApplicationController
 
   # GET /doctors
   def index
-    doctors = Doctor.page(page_params[:page]).per_page(page_params[:per_page])
-    json_response(doctors, include: ['doctor', 'user'], fields: ['id', 'cost', 'speciality'], meta: pagination_dict(doctors))
+    doctors = Doctor.all
+    doctors = doctors.where('LOWER(speciality) LIKE :speciality', {speciality: "%#{params[:speciality_query].downcase}%" }) unless params[:speciality_query].nil?
+    doctors = doctors.page(page_params[:page]).per_page(page_params[:per_page])
+    json_response(doctors, include: ['doctor', 'user'], fields: ['id', 'cost', 'speciality', 'office_address'], meta: pagination_dict(doctors))
   end
 
   # POST /doctors

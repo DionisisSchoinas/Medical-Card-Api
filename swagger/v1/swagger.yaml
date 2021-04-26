@@ -260,6 +260,10 @@ paths:
         in: query
         schema:
           type: string
+      - name: speciality_query
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: returns all doctors
