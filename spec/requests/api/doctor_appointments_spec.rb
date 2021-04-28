@@ -12,6 +12,7 @@ RSpec.describe 'Doctor Appointments API', type: :request do
       parameter name: :doctor_id, in: :path, type: :string
       parameter name: :page, in: :query, type: :string
       parameter name: :per_page, in: :query, type: :string
+      parameter name: :month, in: :query, type: :string
 
       response '200', 'returns all doctor\'s appointments (only dates)' do
         run_test!
@@ -94,6 +95,7 @@ RSpec.describe 'Doctor Appointments API', type: :request do
       parameter name: :AuthorizationToken, in: :header, type: :string
       parameter name: :page, in: :query, type: :string
       parameter name: :per_page, in: :query, type: :string
+      parameter name: :month, in: :query, type: :string
 
       response '200', 'returns all doctor\'s appointments (only dates)' do
         run_test!

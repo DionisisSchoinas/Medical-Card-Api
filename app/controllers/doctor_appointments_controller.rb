@@ -15,7 +15,15 @@ class DoctorAppointmentsController < ApplicationController
 
   # GET /doctors/:doctor_id/appointments_simple or /doctor/appointments_simple
   def simple_list
-    appointments = @doctor.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day}).order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page]).order('appointment_date_time_start ASC')
+    if params[:month].nil?
+      appointments = @doctor.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day}).order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page])
+    else
+      appointments = @doctor.appointments.where('appointment_date_time_start >= :today', {today: Date.today.beginning_of_day})
+      date = Date.strptime(params[:month], '%m-%Y')
+      appointments = appointments.where('EXTRACT(YEAR FROM appointment_date_time_start) = :year', {year: date.year})
+      appointments = appointments.where('EXTRACT(MONTH FROM appointment_date_time_start) = :month', {month: date.month})
+      appointments = appointments.order('appointment_date_time_start ASC').page(page_params[:page]).per_page(page_params[:per_page])
+    end
     json_response(appointments, include: ['appointment.appointment_date_time_start', 'appointment.appointment_date_time_end'], meta: pagination_dict(appointments))
   end
 

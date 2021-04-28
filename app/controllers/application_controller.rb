@@ -8,8 +8,8 @@ class ApplicationController < ActionController::API
 
   def page_params
     p = { page: 1, per_page: 20 }
-    p[:page] = params[:page] unless params[:page].nil?
-    p[:per_page] = params[:per_page] unless params[:per_page].nil?
+    p[:page] = params[:page] unless params[:page].nil? || params[:page].to_i < 1
+    p[:per_page] = params[:per_page] unless params[:per_page].nil? || params[:per_page].to_i < 1
     return p
   end
 
