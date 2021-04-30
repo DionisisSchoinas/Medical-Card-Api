@@ -12,6 +12,19 @@ RSpec.describe 'Doctors API' do
   # authorize request
   let(:headers) { valid_headers }
 
+  # Test suite for GET /doctor
+  describe 'GET /doctor' do
+    before { get "/doctor", params: {}, headers: headers }
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
+    end
+
+    it 'returns logged in doctor' do
+      expect(json['doctor']['id']).to eq(id)
+    end
+  end
+
   # Test suite for GET /doctors
   describe 'GET /doctors' do
     context 'with default page and per_page values' do
@@ -134,8 +147,8 @@ RSpec.describe 'Doctors API' do
     end
   end
 
-  # Test suite for PUT /doctors/:id
-  describe 'PUT /doctors/:id' do
+  # Test suite for PUT /doctor
+  describe 'PUT /doctor' do
     context 'when the doctor exists' do
       let(:valid_attributes) do
         {
@@ -144,7 +157,7 @@ RSpec.describe 'Doctors API' do
           }
         }.to_json
       end
-      before { put "/doctors/#{id}", params: valid_attributes, headers: headers }
+      before { put "/doctor", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(json['doctor']['id']).to eq(id)

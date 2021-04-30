@@ -1,5 +1,19 @@
 class DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show, :update]
+  before_action :set_doctor, only: [:show]
+  before_action :set_current_doctor, only: [:index_current, :update_current ]
+
+  # GET /doctor
+  def index_current
+    if @doctor.nil?
+      json_response({ message: Message.unauthorized }, status: :unauthorized)
+    else
+      json_response(@doctor, include: ['user', 'image'])
+    end
+    #doctors = Doctor.all
+    #doctors = doctors.where('LOWER(speciality) LIKE :speciality', {speciality: "%#{params[:speciality_query].downcase}%" }) unless params[:speciality_query].nil?
+    #doctors = doctors.page(page_params[:page]).per_page(page_params[:per_page])
+    #json_response(doctors, include: ['doctor', 'user'], fields: ['id', 'cost', 'speciality', 'office_address'], meta: pagination_dict(doctors))
+  end
 
   # GET /doctors
   def index
@@ -25,14 +39,14 @@ class DoctorsController < ApplicationController
     json_response(@doctor, include: ['user', 'image'])
   end
 
-  # PUT /doctors/:id
-  def update
-    if current_user[:id] == @doctor[:user_id]
+  # PUT /doctor
+  def update_current
+    if @doctor.nil?
+      json_response({ message: Message.unauthorized }, status: :unauthorized)
+    else
       @doctor.update(doctor_params)
       @doctor.image.update(image_params) unless image_params[:image_base64].nil?
-      json_response(@doctor)
-    else
-      json_response({ message: Message.unauthorized }, status: :unauthorized)
+      json_response(@doctor, include: ['user', 'image'])
     end
   end
 
@@ -50,6 +64,10 @@ class DoctorsController < ApplicationController
 
   def image_params
     params.permit(:image_base64)
+  end
+
+  def set_current_doctor
+    @doctor = current_user.doctor
   end
 
   def set_doctor

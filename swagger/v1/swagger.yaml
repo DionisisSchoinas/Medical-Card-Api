@@ -321,6 +321,57 @@ paths:
               - email
               - cost
               - image_base64
+  "/doctor":
+    get:
+      summary: Gets currently logged in doctor
+      tags:
+      - Doctor
+      parameters:
+      - name: AuthorizationToken
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: returns a doctor
+        '401':
+          description: user not a doctor or authorization failed
+        '422':
+          description: invalid request
+    put:
+      summary: Updates currently logged in doctor
+      tags:
+      - Doctor
+      parameters:
+      - name: AuthorizationToken
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: returns updated doctor
+        '401':
+          description: current user not a doctor or authorization failed
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                speciality:
+                  type: string
+                office_address:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                cost:
+                  type: number
+                image_base64:
+                  type: string
   "/doctors/{id}":
     get:
       summary: Gets a doctor
@@ -345,47 +396,6 @@ paths:
           description: doctor not found
         '422':
           description: invalid request
-    put:
-      summary: Updates a doctor
-      tags:
-      - Doctor
-      parameters:
-      - name: AuthorizationToken
-        in: header
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: returns updated doctor
-        '401':
-          description: current user not the given doctor or authorization failed
-        '404':
-          description: doctor not found
-        '422':
-          description: invalid request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                speciality:
-                  type: string
-                office_address:
-                  type: string
-                phone:
-                  type: string
-                email:
-                  type: string
-                cost:
-                  type: number
-                image_base64:
-                  type: string
   "/qr/generate":
     get:
       summary: Generates a token for current user
