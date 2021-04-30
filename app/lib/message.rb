@@ -24,6 +24,10 @@ class Message
     'Doctor account created successfully'
   end
 
+  def self.doctor_account_updated
+    'Doctor account updated successfully'
+  end
+
   def self.doctor_account_exists
     'Doctor account already exists'
   end

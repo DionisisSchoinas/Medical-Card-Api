@@ -159,12 +159,12 @@ RSpec.describe 'Doctors API' do
       end
       before { put "/doctor", params: valid_attributes, headers: headers }
 
-      it 'updates the record' do
-        expect(json['doctor']['id']).to eq(id)
-      end
-
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
+      end
+
+      it 'updates the record' do
+        expect(response.body).to match(/Doctor account updated successfully/)
       end
     end
   end

@@ -9,10 +9,6 @@ class DoctorsController < ApplicationController
     else
       json_response(@doctor, include: ['user', 'image'])
     end
-    #doctors = Doctor.all
-    #doctors = doctors.where('LOWER(speciality) LIKE :speciality', {speciality: "%#{params[:speciality_query].downcase}%" }) unless params[:speciality_query].nil?
-    #doctors = doctors.page(page_params[:page]).per_page(page_params[:per_page])
-    #json_response(doctors, include: ['doctor', 'user'], fields: ['id', 'cost', 'speciality', 'office_address'], meta: pagination_dict(doctors))
   end
 
   # GET /doctors
@@ -44,9 +40,9 @@ class DoctorsController < ApplicationController
     if @doctor.nil?
       json_response({ message: Message.unauthorized }, status: :unauthorized)
     else
-      @doctor.update(doctor_params)
+      @doctor.update(doctor_update_params)
       @doctor.image.update(image_params) unless image_params[:image_base64].nil?
-      json_response(@doctor, include: ['user', 'image'])
+      json_response({ message: Message.doctor_account_updated})
     end
   end
 
@@ -54,6 +50,16 @@ class DoctorsController < ApplicationController
 
   def doctor_params
     params.require(:doctor).permit(
+      :speciality,
+      :office_address,
+      :phone,
+      :email,
+      :cost
+    )
+  end
+
+  def doctor_update_params
+    params.permit(
       :speciality,
       :office_address,
       :phone,
