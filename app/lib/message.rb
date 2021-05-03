@@ -51,4 +51,8 @@ class Message
   def self.appointment_booked_successfully
     'Appointment booked successfully'
   end
+
+  def self.token_not_qr
+    'Token wasn\'t a QR'
+  end
 end

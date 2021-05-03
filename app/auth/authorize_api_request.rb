@@ -16,9 +16,14 @@ class AuthorizeApiRequest
   attr_reader :headers
 
   def user
-    # check if user is in the database
-    # memorize user object
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    # Ensure token isn't a QR only token
+    if decoded_auth_token[:is_qr].nil?
+      # check if user is in the database
+      # memorize user object
+      @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    else
+      raise(ExceptionHandler::InvalidToken, ("#{Message.invalid_token}"))
+    end
     # handle user not found
   rescue ActiveRecord::RecordNotFound => e
     # raise custom error
