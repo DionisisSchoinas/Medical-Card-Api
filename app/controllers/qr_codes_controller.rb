@@ -34,7 +34,7 @@ class QrCodesController < ApplicationController
         if appointment[0].nil?
           json_response( { appointment: {}, meta: prev_reponse } )
         else
-          json_response(appointment[0], include: ['patient.user'], meta: prev_reponse)
+          json_response(appointment[0], include: ['patient.user'], meta: prev_reponse, serializer: AppointmentForDoctorSerializer)
         end
       end
     end
