@@ -19,4 +19,14 @@ class JsonWebToken
     # raise custom error to be handled by custom handler
     raise ExceptionHandler::InvalidToken, e.message
   end
+
+  def self.decode_qr(token)
+    # get payload; first index in decoded Array
+    body = JWT.decode(token, HMAC_SECRET)[0]
+    HashWithIndifferentAccess.new body
+    # rescue from all decode errors
+  rescue JWT::DecodeError => e
+    # raise custom error to be handled by custom handler
+    raise ExceptionHandler::InvalidQRToken, e.message
+  end
 end

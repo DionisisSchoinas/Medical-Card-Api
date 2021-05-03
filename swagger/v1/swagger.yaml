@@ -425,7 +425,8 @@ paths:
           type: string
       responses:
         '200':
-          description: returns appointment information
+          description: returns appointment information and previous appointment if
+            it exists
         '401':
           description: unauthorized request (current user isn't a doctor) or authorization
             failed

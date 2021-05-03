@@ -41,7 +41,7 @@ RSpec.describe 'QR Codes API', type: :request do
         required: [ 'token' ]
       }
 
-      response '200', 'returns appointment information' do
+      response '200', 'returns appointment information and previous appointment if it exists' do
         run_test!
       end
 

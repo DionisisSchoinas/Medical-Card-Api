@@ -63,11 +63,11 @@ RSpec.describe 'QR Codes API', type: :request do
       context 'and has an expired token' do
         before { post "/qr/read", params: expired_token, headers: valid_headers }
 
-        it 'returns status code 401' do
-          expect(response).to have_http_status(401)
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
         end
 
-        it 'returns appointment information' do
+        it 'returns message' do
           expect(response.body).to match(/Signature has expired/)
         end
       end
@@ -79,7 +79,7 @@ RSpec.describe 'QR Codes API', type: :request do
           expect(response).to have_http_status(422)
         end
 
-        it 'returns appointment information' do
+        it 'returns message' do
           expect(response.body).to match(/param is missing or the value is empty: token/)
         end
       end
