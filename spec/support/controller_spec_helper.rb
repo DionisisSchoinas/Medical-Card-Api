@@ -11,12 +11,12 @@ module ControllerSpecHelper
 
   # generate QR token
   def qr_token_generator(patient_id)
-    JsonWebToken.encode(patient_id: patient_id)
+    JsonWebToken.encode({ patient_id: patient_id, is_qr: true })
   end
 
   # generate expired QR token
   def expired_qr_token_generator(patient_id)
-    JsonWebToken.encode({ patient_id: patient_id }, (Time.now - 20.minutes))
+    JsonWebToken.encode({ patient_id: patient_id, is_qr: true }, (Time.now - 20.minutes))
   end
 
   # return valid headers
