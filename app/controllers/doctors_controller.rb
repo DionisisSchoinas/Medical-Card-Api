@@ -40,8 +40,8 @@ class DoctorsController < ApplicationController
     if @doctor.nil?
       json_response({ message: Message.unauthorized }, status: :unauthorized)
     else
-      @doctor.update(doctor_update_params)
-      @doctor.image.update(image_params) unless image_params[:image_base64].nil?
+      @doctor.update!(doctor_update_params)
+      @doctor.image.update!(image_params) unless image_params[:image_base64].nil?
       json_response({ message: Message.doctor_account_updated})
     end
   end
