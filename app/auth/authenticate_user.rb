@@ -7,7 +7,12 @@ class AuthenticateUser
 
   # Service entry point
   def call
-    { auth_token: JsonWebToken.encode(user_id: user.id), is_doctor: !user.doctor.nil?, fullname: user[:fullname], date_of_birth: user[:date_of_birth] } if user
+    if user
+      response = { auth_token: JsonWebToken.encode(user_id: user.id), is_doctor: !user.doctor.nil?, fullname: user[:fullname], date_of_birth: user[:date_of_birth] }
+      response[:doctor_id] = 0
+      response[:doctor_id] = user.doctor.id unless user.doctor.nil?
+      return response
+    end
   end
 
   private

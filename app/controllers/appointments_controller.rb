@@ -18,7 +18,9 @@ class AppointmentsController < ApplicationController
     # => Send push notification to devices
     #----------------
     topic = new_appointment.doctor.id
-    response = @fcm.send_to_topic(topic.to_s, notification: {body: "CREATE"}, data: {id: new_appointment.id, appointment_date_time_start: new_appointment.appointment_date_time_start, appointment_date_time_end: new_appointment.appointment_date_time_end} )
+    response1 = @fcm.send_to_topic(topic.to_s, notification: {body: "CREATE"}, data: {id: new_appointment.id, appointment_date_time_start: new_appointment.appointment_date_time_start, appointment_date_time_end: new_appointment.appointment_date_time_end} )
+    response1 = @fcm.send_to_topic(topic.to_s, notification: {body: "CREATE"}, data: {id: new_appointment.id, appointment_date_time_start: new_appointment.appointment_date_time_start, appointment_date_time_end: new_appointment.appointment_date_time_end} )
+    response2 = @fcm.send_to_topic('extra'+topic.to_s, notification: {body: "CREATE"}, data: {id: new_appointment.id, appointment_date_time_start: new_appointment.appointment_date_time_start, appointment_date_time_end: new_appointment.appointment_date_time_end, patient_fullname: @patient.user.fullname } )
 
     json_response({ message: Message.appointment_booked_successfully }, status: :created)
   end
@@ -35,6 +37,7 @@ class AppointmentsController < ApplicationController
     #----------------
     topic = @appointment.doctor.id
     response = @fcm.send_to_topic(topic.to_s, notification: {body: "DELETE"}, data: {id: @appointment.id, appointment_date_time_start: @appointment.appointment_date_time_start} )
+    response = @fcm.send_to_topic('extra'+topic.to_s, notification: {body: "DELETE"}, data: {id: @appointment.id, appointment_date_time_start: @appointment.appointment_date_time_start} )
 
     @appointment.destroy
 
