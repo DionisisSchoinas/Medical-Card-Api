@@ -21,6 +21,8 @@ gem 'active_model_serializers', '~> 0.10.0'
 gem 'jwt'
 # Pagination
 gem 'will_paginate', '~> 3.1.0'
+# Cloud messaging
+gem 'fcm'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
